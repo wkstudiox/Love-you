@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where is the real moon?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+        }
+
+        #text {
+            color: white;
+            font-size: 28px;
+            text-align: center;
+            padding: 20px;
+            transition: opacity 0.8s ease;
+            z-index: 10;
+            line-height: 1.6;
+        }
+
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="text">Where is the real moon?</div>
+
+    <video id="myVideo" playsinline>
+        <source src="video.mp4" type="video/mp4">
+    </video>
+
+    <script>
+        const text = document.getElementById('text');
+        const video = document.getElementById('myVideo');
+        let clicked = false;
+
+        // 3 second baad text change
+        setTimeout(() => {
+            text.style.opacity = 0;
+
+            setTimeout(() => {
+                text.innerHTML = "asli chand kaha hai?<br>click to see";
+                text.style.opacity = 1;
+            }, 800);
+        }, 2000);
+
+        // Click pe video play
+        document.body.addEventListener('click', () => {
+            if (clicked) return;
+            clicked = true;
+
+            text.style.display = 'none';
+            video.style.display = 'block';
+
+            video.muted = false;
+            video.volume = 1;
+
+            video.play().catch(err => {
+                console.log("Play error:", err);
+            });
+        });
+
+        // Video khatam hone ke baad submit.html open
+        video.addEventListener('ended', () => {
+            window.location.replace("submit.html");
+        });
+    </script>
+
+</body>
+</html>
